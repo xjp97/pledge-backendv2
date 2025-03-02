@@ -1,0 +1,59 @@
+[mysql]
+address = "127.0.0.1"
+port = "3306"
+db_name = "pledge_v21"
+user_name = "root"
+password = "123456"
+max_open_conns = 0
+max_idle_conns = 0
+max_life_time = 0
+
+[redis]
+address = "127.0.0.1"
+port = "6379"
+db = 0
+user_name = ""
+password = ""
+max_idle = 0
+max_active = 0
+max_timeout = 0
+
+[testnet]
+chain_id = "11155111"
+net_url = "https://ethereum-sepolia-rpc.publicnode.com"
+plgr_address = "0x790B6C61Ca2f5E0275a6b0D47c9e8DDc6b479EeA"
+pledge_pool_token = "0x62002d31f4e8e3f04BC3a4DDB239721130c6d4aA"
+bsc_pledge_oracle_token = "0xC696fC181E5A3dF670e2B20de7cBbF625E6f7e25"
+
+#[testnet]
+#chain_id = "97"
+#net_url = "https://data-seed-prebsc-1-s1.binance.org:8545"
+#plgr_address = "0x62002d31f4e8e3f04BC3a4DDB239721130c6d4aA"
+#pledge_pool_token = "0x6E2ae049733D1354b8ECDFcd4b3E232B08937376"
+#bsc_pledge_oracle_token = "0xC696fC181E5A3dF670e2B20de7cBbF625E6f7e25"
+
+
+[mainnet]
+chain_id = "56"
+net_url = "https://bsc-dataseed.binance.org"
+plgr_address = "0x6aa91cbfe045f9d154050226fcc830ddba886ced"
+pledge_pool_token = "0x25C3f3d3E3299d7C56700CE54303Fbe1E6a16fee"
+bsc_pledge_oracle_token = "0x4Aa9EB3149089D7208C9C0403BF1b9bA25ff05BD"
+
+[token]
+logo_url = "https://tokens.pancakeswap.finance/pancakeswap-top-100.json"
+
+
+[threshold]
+pledge_pool_token_threshold_bnb = "100000000000000000"
+
+
+[email]
+username = "xujunping123@gmail.com"
+pwd = "XXXX"
+host = "smtp.gmail.com"
+port = "587"
+from = "pledge beidge <test@gmail.com>"
+subject = "Insufficient balance of bridge account"
+to = ["XXXX@outlook.com"]
+cc = ["XXXX@126.com"]
