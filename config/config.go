@@ -10,6 +10,23 @@ type Conf struct {
 	Token     TokenConfig
 	Threshold ThresholdConfig
 	Email     EmailConfig
+	Env       EnvConfig
+	Jwt       JwtConfig
+}
+
+type JwtConfig struct {
+	SecretKey  string `toml:"secret_key"`
+	ExpireTime int    `toml:"expire_time"` // duration, s
+}
+
+type EnvConfig struct {
+	Port               string `toml:"port"`
+	Version            string `toml:"version"`
+	Protocol           string `toml:"protocol"`
+	DomainName         string `toml:"domain_name"`
+	TaskDuration       int64  `toml:"task_duration"`
+	WssTimeoutDuration int64  `toml:"wss_timeout_duration"`
+	TaskExtendDuration int64  `toml:"task_extend_duration"`
 }
 
 type MysqlConfig struct {
