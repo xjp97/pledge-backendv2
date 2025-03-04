@@ -42,13 +42,13 @@ func (c *PoolController) TokenList(ctx *gin.Context) {
 	req := request.TokenList{}
 	result := response.TokenList{}
 
-	//errCode := validate.NewTokenList().TokenList(ctx, &req)
-	//if errCode != statecode.CommonSuccess {
-	//	ctx.JSON(200, map[string]string{
-	//		"error": "chainId error",
-	//	})
-	//	return
-	//}
+	errCode := validate.NewTokenList().TokenList(ctx, &req)
+	if errCode != statecode.CommonSuccess {
+		ctx.JSON(200, map[string]string{
+			"error": "chainId error",
+		})
+		return
+	}
 	errCode, data := services.NewTokenList().GetTokenList(&req)
 	if errCode != statecode.CommonSuccess {
 		ctx.JSON(200, map[string]string{
@@ -89,6 +89,48 @@ func (c *PoolController) GetBaseUrl() string {
 		return config.Config.Env.Protocol + "://" + config.Config.Env.DomainName + ":" + config.Config.Env.Port + "/"
 	}
 	return config.Config.Env.Protocol + "://" + config.Config.Env.DomainName + "/"
+}
+
+func (c *PoolController) Search(ctx *gin.Context) {
+
+	res := response.Gin{Res: ctx}
+	req := request.Search{}
+	result := response.Search{}
+
+	// 参数校验
+	errCode := validate.NewSearch().Search(ctx, &req)
+	if errCode != statecode.CommonSuccess {
+		res.Response(ctx, errCode, nil)
+		return
+	}
+	err, tatol, pools := services.NewSearch().Search(&req)
+	if err != statecode.CommonSuccess {
+		res.Response(ctx, err, nil)
+		return
+	}
+	result.Count = tatol
+	result.Rows = pools
+	res.Response(ctx, statecode.CommonSuccess, result)
+	return
+
+}
+
+func (c *PoolController) DebtTokenList(ctx *gin.Context) {
+	res := response.Gin{Res: ctx}
+	req := request.TokenList{}
+	// 参数校验
+	errCode := validate.NewTokenList().TokenList(ctx, &req)
+	if errCode != statecode.CommonSuccess {
+		res.Response(ctx, errCode, nil)
+		return
+	}
+	err, debtTokenList := services.NewTokenList().DebtTokenList(&req)
+	if err != statecode.CommonSuccess {
+		res.Response(ctx, err, nil)
+		return
+	}
+	res.Response(ctx, statecode.CommonSuccess, debtTokenList)
+	return
 }
 
 func (c *PoolController) PoolDataInfo(ctx *gin.Context) {

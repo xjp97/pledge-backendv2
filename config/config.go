@@ -3,13 +3,14 @@ package config
 var Config Conf
 
 type Conf struct {
-	Mysql     MysqlConfig
-	Redis     RedisConfig
-	TestNet   TestNetConfig
-	MainNet   MainNetConfig
-	Token     TokenConfig
-	Threshold ThresholdConfig
-	Email     EmailConfig
+	Mysql        MysqlConfig
+	Redis        RedisConfig
+	TestNet      TestNetConfig
+	MainNet      MainNetConfig
+	Token        TokenConfig
+	DefaultAdmin DefaultAdminConfig
+	Threshold    ThresholdConfig
+	Email        EmailConfig
 	Env       EnvConfig
 	Jwt       JwtConfig
 }
@@ -27,6 +28,11 @@ type EnvConfig struct {
 	TaskDuration       int64  `toml:"task_duration"`
 	WssTimeoutDuration int64  `toml:"wss_timeout_duration"`
 	TaskExtendDuration int64  `toml:"task_extend_duration"`
+}
+
+type DefaultAdminConfig struct {
+	Username string `toml:"username"`
+	Password string `toml:"password"`
 }
 
 type MysqlConfig struct {

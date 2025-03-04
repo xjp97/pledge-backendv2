@@ -60,6 +60,10 @@ task_extend_duration = 5
 wss_timeout_duration = 20
 domain_name = "118.195.185.245:8080"
 
+[defaultadmin]
+username = "admin"
+password = "password"
+
 [email]
 username = "xujunping123@gmail.com"
 pwd = "XXXX"
