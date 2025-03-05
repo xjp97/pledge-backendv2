@@ -4,6 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"pledge-backendv2/api/middlewares"
 	"pledge-backendv2/api/models"
+	"pledge-backendv2/api/models/kucoin"
+	"pledge-backendv2/api/models/ws"
 	"pledge-backendv2/api/routes"
 	"pledge-backendv2/api/static"
 	"pledge-backendv2/api/validate"
@@ -21,9 +23,9 @@ func main() {
 
 	validate.BindingValidator()
 
-	//go ws.StartServer()
-	//
-	//go kucoin.GetExchangePrice()
+	go ws.StartServer()
+
+	go kucoin.GetExchangePrice()
 
 	gin.SetMode(gin.ReleaseMode)
 	app := gin.Default()

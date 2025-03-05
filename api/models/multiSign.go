@@ -1,5 +1,13 @@
 package models
 
+import (
+	"encoding/json"
+	"errors"
+	"gorm.io/gorm"
+	"pledge-backendv2/api/models/request"
+	"pledge-backendv2/db"
+)
+
 // MultiSign multi-sign signature
 type MultiSign struct {
 	Id               int32  `gorm:"column:id;primaryKey"`
@@ -17,4 +25,43 @@ type MultiSign struct {
 
 func NewMultiSign() *MultiSign {
 	return &MultiSign{}
+}
+
+func (m *MultiSign) Set(multiSign *request.SetMultiSign) error {
+
+	marshal, err := json.Marshal(multiSign.MultiSignAccount)
+	err = db.Mysql.Table("multi_sign").Where("chain_id", multiSign.ChainId).Delete(&m).Debug().Error
+	if err != nil {
+		return err
+	}
+	err = db.Mysql.Table("multi_sign").Where("id = ?", m.Id).Create(&MultiSign{
+		ChainId:          multiSign.ChainId,
+		SpName:           multiSign.SpName,
+		SpToken:          multiSign.SpToken,
+		JpName:           multiSign.JpName,
+		JpToken:          multiSign.JpToken,
+		SpAddress:        multiSign.SpAddress,
+		JpAddress:        multiSign.JpAddress,
+		SpHash:           multiSign.SpHash,
+		JpHash:           multiSign.JpHash,
+		MultiSignAccount: string(marshal),
+	}).Debug().Error
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Get Multi-Sign
+func (m *MultiSign) Get(chainId int) error {
+	err := db.Mysql.Table("multi_sign").Where("chain_id", chainId).First(&m).Debug().Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil
+		} else {
+			return errors.New("record select err " + err.Error())
+		}
+	}
+	return nil
 }

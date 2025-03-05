@@ -20,5 +20,16 @@ func InitRoute(e *gin.Engine) *gin.Engine {
 	v2Group.GET("/pool/debtTokenList", middlewares.CheckToken(), poolController.DebtTokenList)
 	v2Group.GET("/pool/search", middlewares.CheckToken(), poolController.Search)
 
+	userController := controllers.UserController{}
+	v2Group.POST("/user/login", userController.Login)
+	v2Group.POST("/user/logout", middlewares.CheckToken(), userController.Logout)
+
+	priceController := controllers.PriceController{}
+	v2Group.GET("/price", priceController.NewPrice)
+
+	controller := controllers.MultiSignPoolController{}
+	v2Group.POST("/pool/setMultiSign", middlewares.CheckToken(), controller.SetMultiSign)
+	v2Group.POST("/pool/getMultiSign", middlewares.CheckToken(), controller.GetMultiSign)
+
 	return e
 }
